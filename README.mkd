@@ -58,6 +58,10 @@ Which statistics are displayed and for which intervals are conveniently "configu
 
 I will add other stats such as most common password tried, number of attempts per username, etc. Suggestions are welcome.
 
+Here's how the homepage looks like:
+
+![kippostats homepage](https://github.com/mfontani/kippo-stats/raw/master/kippo-home.png)
+
 Copyright and Information
 -------------------------
 
