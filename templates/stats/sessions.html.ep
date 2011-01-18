@@ -1,0 +1,64 @@
+% layout 'default';
+% title 'Kippo Sessions Stats';
+
+<h2 style="margin:auto;text-align:center;">Statistics for the <a href="https://code.google.com/p/kippo/">Kippo</a> SSH honeypot</h2>
+
+<article style="margin:auto; text-align:center;">
+    <figure>
+        <img src='#loading' id="img_sessions_today" />
+        <figcaption>
+            <span id="txt_sessions_today">0</span> total sessions
+            since <span id="txt_today">Eternity</span>
+        </figcaption>
+    </figure>
+    <figure>
+        <img src='#loading' id="img_sessions_last7days" />
+        <figcaption>
+            <span id="txt_sessions_last7days">0</span> total sessions
+            since <span id="txt_last7days">Eternity</span>
+        </figcaption>
+    </figure>
+    <figure>
+        <img src='#loading' id="img_sessions_last30days" />
+        <figcaption>
+            <span id="txt_sessions_last30days">0</span> total sessions
+            since <span id="txt_last30days">Eternity</span>
+        </figcaption>
+    </figure>
+</article>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script>
+    $(function() {
+        var t = new Date(),
+            t7 = new Date(t.getFullYear(),t.getMonth(),t.getDate()-7),
+            t30 = new Date(t.getFullYear(),t.getMonth(),t.getDate()-30),
+            today = '',
+            last7days = '',
+            last30days = '';
+        today = t.getFullYear() + '-' +
+            ((t.getMonth()+1)<10 ? '0'+(t.getMonth()+1)+'' : ''+(t.getMonth()+1)) + '-' +
+            (t.getDate()<10 ? '0'+t.getDate() : t.getDate());
+        last7days = t7.getFullYear() + '-' +
+            ((t7.getMonth()+1)<10 ? '0'+(t7.getMonth()+1)+'' : ''+(t7.getMonth()+1)) + '-' +
+            (t7.getDate()<10 ? '0'+t7.getDate() : t7.getDate());
+        last30days = t30.getFullYear() + '-' +
+            ((t30.getMonth()+1)<10 ? '0'+(t30.getMonth()+1)+'' : ''+(t30.getMonth()+1)) + '-' +
+            (t30.getDate()<10 ? '0'+t30.getDate() : t30.getDate());
+
+        $('#txt_today').html(today);
+        $('#txt_last7days').html(last7days);
+        $('#txt_last30days').html(last30days);
+
+        $.ajax({ url: "/stats/sessions/count/" + today,      success: function(data){ $('#txt_sessions_today').html(data); }})
+        $.ajax({ url: "/stats/sessions/count/" + last7days,  success: function(data){ $('#txt_sessions_last7days').html(data); }})
+        $.ajax({ url: "/stats/sessions/count/" + last30days, success: function(data){ $('#txt_sessions_last30days').html(data); }})
+
+        $('#img_sessions_today').attr('src',"/stats/sessions/img/" + today + '?interval=10');
+        $('#img_sessions_last7days').attr('src',"/stats/sessions/img/" + last7days + '?interval=30');
+        $('#img_sessions_last30days').attr('src',"/stats/sessions/img/" + last30days + '?interval=60');
+
+    });
+
+</script>
+

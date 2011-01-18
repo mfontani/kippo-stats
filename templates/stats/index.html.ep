@@ -1,0 +1,39 @@
+% layout 'default';
+% title 'Kippo Stats';
+
+<h2 style="margin:auto;text-align:center;">Statistics for the <a href="https://code.google.com/p/kippo/">Kippo</a> SSH honeypot</h2>
+
+<article style="margin:auto; text-align:center;">
+    <figure>
+        <a href="/stats/sessions/"><img src='#loading' id="img_sessions_today" /></a>
+        <a href="/stats/successful_auth/"><img src='#loading' id="img_successful_auth_today" /></a>
+        <figcaption>
+            <span id="txt_sessions_today">0</span> total sessions,
+            <span id="txt_successful_auth_today">0</span> total successful auth
+            since <span id="txt_today">Eternity</span>
+        </figcaption>
+    </figure>
+</article>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script>
+    $(function() {
+        var t = new Date(),
+            today = '';
+        today = t.getFullYear() + '-' +
+            ((t.getMonth()+1)<10 ? '0'+(t.getMonth()+1)+'' : ''+(t.getMonth()+1)) + '-' +
+            (t.getDate()<10 ? '0'+t.getDate() : t.getDate());
+
+        $('#txt_today').html(today);
+
+        $.ajax({ url: "/stats/sessions/count/" + today,      success: function(data){ $('#txt_sessions_today').html(data); }})
+        $.ajax({ url: "/stats/successful_auth/count/" + today,      success: function(data){ $('#txt_successful_auth_today').html(data); }})
+
+        $('#img_successful_auth_today').attr('src',"/stats/successful_auth/img/" + today + '?interval=10');
+
+        $('#img_sessions_today').attr('src',"/stats/sessions/img/" + today + '?interval=10');
+
+    });
+
+</script>
+

@@ -1,0 +1,5 @@
+{
+    "dsn": "dbi:mysql:database=kippo;host=192.168.1.100",
+    "username": "kippostats",
+    "password": "k1pp0stats"
+}

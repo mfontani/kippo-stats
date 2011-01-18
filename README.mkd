@@ -1,0 +1,84 @@
+kippo stats
+===========
+
+A [Mojolicious][1] and [DBIx::Class][2] webapp to display statistics about your [kippo][3] SSH honeypot.
+
+Prerequisites
+-------------
+
+    cpanm Mojolicious DBIx::Class Date::Calc Chart::Strip Date::Parse
+
+Configuration
+-------------
+
+Kippo's `kippo.cfg` needs configured as per the comments on their [FAQ][4] and a database created, rights granted to the user, yadda yadda yadda
+
+    [database_mysql]
+    host = localhost
+    database = kippo
+    username = kippo
+    password = AV3ryStr0ngP455w0rdunl1k3th150n3
+
+The user above needs to be able to have all rights on `kippo.*` so that the program can write logs to the database.
+
+For this Mojolicious application, I would suggest creating a separate `kippostats` user, which instead only needs `SELECT` rights on `kippo.*` to display the statistics.
+
+You need to configure `kippo_stats.json` accordingly, specifying the `dsn`, `username` and `password`.
+
+You can then launch a development server on `localhost:3000` by issuing:
+
+    perl script/kippo_stats daemon
+
+The statistics will be available at `http://localhost:3000/stats/`. Additional statistics are linked from that "landing" page.
+
+If you'd like to make the development server available via lighttpd, you may want to use the following stanza:
+
+    $HTTP["host"] =~ "kippostats\.example\.com" {
+        url.redirect         = ( "^/$" => "http://kippostats.example.com/stats/" )
+        server.errorlog      = "/var/log/lighttpd/kippostats-error.log"
+        accesslog.filename   = "/var/log/lighttpd/kippostats-access.log"
+        server.document-root = "/home/yourusername/kippo_stats/public"
+        proxy.server         = ( "" => (("host" => "127.0.0.1","port" => "3000")) )
+    }
+
+The above Works For Me®; your mileage will vary, and fuel costs will rise.
+
+Statistics
+----------
+
+The "landing" page at `/stats/` shows the statistics for today only, grouped on 10 minutes intervals.
+You can click on one of the graphs to display statistics for that "metric" for today, last 7 and last 30 days.
+
+The following "metrics" are implemented:
+
+- number of attempted SSH sessions every X minutes (10 minutes for today, 30 minutes for the week and 1 hour for the month)
+- number of successful SSH connections every X minutes (same 10, 30, 1 hour)
+
+Which statistics are displayed and for which intervals are conveniently "configurable" via JavaScript on the respective statistics' HTML pages (they're URL parameters).
+
+I will add other stats such as most common password tried, number of attempts per username, etc. Suggestions are welcome.
+
+Copyright and Information
+-------------------------
+
+Please use the Issues tab on Github if you have a patch or found a bug.
+
+Copyright (c) 2011, Marco Fontani <mfontani@cpan.org>. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+- The names of its contributors may not be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL Marco Fontani BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Bugs
+====
+
+The code does not contain any Futurama quotes. Witty patches are very welcome.
+
+[1]: http://search.cpan.org/dist/Mojolicious
+[2]: http://search.cpan.org/dist/DBIx-Class
+[3]: https://code.google.com/p/kippo/
+[4]: https://code.google.com/p/kippo/wiki/FAQ

@@ -1,0 +1,19 @@
+<!doctype html><html>
+    <head>
+        <meta charset="utf-8" />
+        <title><%= title %></title>
+        <%= base_tag %>
+    </head>
+    <body>
+        <header style="text-align:center">
+            <h1><%= title %></h1>
+        </header>
+        <%= content %>
+
+        <footer style="text-align:right;font-size:65%;">
+            &copy;2011 <a href="http://darkpan.com/curriculum-vitae-fontani-marco.html">Marco Fontani</a> -
+            <a href="https://github.com/mfontani/kippo-stats">Source code</a> -
+            <a href="http://validator.w3.org/check/referer">Valid HTML5</a>
+        </footer>
+    </body>
+</html>
