@@ -53,14 +53,17 @@ The following "metrics" are implemented:
 
 - number of attempted SSH sessions every X minutes (10 minutes for today, 30 minutes for the week and 1 hour for the month)
 - number of successful SSH connections every X minutes (same 10, 30, 1 hour)
+- top 5 usernames attempted for today (top 10 for today, week, month in detailed stats)
+- top 5 passwords attempted for `root` today (top 10 for today, week, month in detailed stats)
 
 Which statistics are displayed and for which intervals are conveniently "configurable" via JavaScript on the respective statistics' HTML pages (they're URL parameters).
 
-I will add other stats such as most common password tried, number of attempts per username, etc. Suggestions are welcome.
+Suggestions for other statistics are welcome, as are suggestions for colours to be used in graphs.
 
 Here's how the homepage looks like:
 
 ![kippostats homepage](https://github.com/mfontani/kippo-stats/raw/master/kippo-home.png)
+![kippostats homepage 2](https://github.com/mfontani/kippo-stats/raw/master/kippo-home2.png)
 
 Copyright and Information
 -------------------------
