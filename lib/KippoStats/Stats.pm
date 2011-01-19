@@ -112,6 +112,7 @@ sub _topmost_to_png
                 { count => '*', '-as' => 'cnt' },
                 $attribute,
             ],
+            as => [ 'cnt', $attribute ],
             group_by => $attribute,
             order_by => { -desc => 'cnt' },
             rows => $topmost,
@@ -126,8 +127,8 @@ sub _topmost_to_png
             $attribute => { 'IN' => [ keys %most_by_attribute ], },
         },
         {
-            select => [ { count => '*' }, $attribute, $timestamp ],
-            as     => [ 'cnt', $attribute, $timestamp ],
+            select => [ { count => '*', -as => 'cnt' }, $attribute, $timestamp ],
+            as => [ 'cnt', $attribute, $timestamp ],
             group_by => "$attribute,date($timestamp),hour($timestamp),floor(minute($timestamp)/$minutes_interval)",
         },
     );
