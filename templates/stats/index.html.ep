@@ -10,7 +10,14 @@
         <figcaption>
             <span id="txt_sessions_today">0</span> total sessions,
             <span id="txt_successful_auth_today">0</span> total successful auth
-            since <span id="txt_today">Eternity</span>
+            since <span class="txt_today">Eternity</span>
+        </figcaption>
+    </figure>
+    <figure>
+        <a href="/stats/usernames_auth/"><img src='#loading' id="img_usernames_auth_today" /></a>
+        <a href="/stats/passwords_auth/"><img src='#loading' id="img_passwords_root_today" /></a>
+        <figcaption>
+            Top attempted usernames and top attempted passwords for <tt>root</tt> since <span class="txt_today">Eternity</span>
         </figcaption>
     </figure>
 </article>
@@ -24,7 +31,7 @@
             ((t.getMonth()+1)<10 ? '0'+(t.getMonth()+1)+'' : ''+(t.getMonth()+1)) + '-' +
             (t.getDate()<10 ? '0'+t.getDate() : t.getDate());
 
-        $('#txt_today').html(today);
+        $('.txt_today').each(function(){$(this).html(today);});
 
         $.ajax({ url: "/stats/sessions/count/" + today,      success: function(data){ $('#txt_sessions_today').html(data); }})
         $.ajax({ url: "/stats/successful_auth/count/" + today,      success: function(data){ $('#txt_successful_auth_today').html(data); }})
@@ -32,6 +39,10 @@
         $('#img_successful_auth_today').attr('src',"/stats/successful_auth/img/" + today + '?interval=10');
 
         $('#img_sessions_today').attr('src',"/stats/sessions/img/" + today + '?interval=10');
+
+        $('#img_usernames_auth_today').attr('src',"/stats/usernames_auth/img/" + today + '?interval=10');
+
+        $('#img_passwords_root_today').attr('src',"/stats/passwords_auth/img/root/" + today + '?interval=10');
 
     });
 

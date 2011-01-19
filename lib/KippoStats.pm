@@ -29,6 +29,10 @@ sub startup {
     $r->route('/stats/successful_auth/count/:since')->to('stats#successful_auth_count');
     $r->route('/stats/successful_auth/img/:since')->to('stats#successful_auth_img');
     $r->route('/stats/successful_auth/')->to('stats#successful_auth');
+    $r->route('/stats/usernames_auth/img/:since')->to('stats#usernames_auth_img');
+    $r->route('/stats/usernames_auth/')->to('stats#usernames_auth');
+    $r->route('/stats/passwords_auth/img/:username/:since')->to('stats#passwords_auth_img');
+    $r->route('/stats/passwords_auth/')->to('stats#passwords_auth');
 }
 
 1;
