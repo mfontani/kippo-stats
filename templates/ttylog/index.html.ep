@@ -1,0 +1,29 @@
+% layout 'default';
+% title 'Kippo TTY Logs';
+
+<h2 style="margin:auto;text-align:center;">Last sessions on the <a href="https://code.google.com/p/kippo/">Kippo</a> SSH honeypot</h2>
+
+<div style="margin:auto; width: 600px;">
+
+<table width="100%">
+<thead><tr>
+    <th>id</th>
+    <th>started</th>
+    <th>ended</th>
+    <th>log length</th>
+    <th>view</th>
+</tr></thead>
+<tbody>
+% for my $entry (@$ttylogs) {
+    <tr>
+        <td><%= $entry->id %></td>
+        <td><%= $entry->ssh_session->starttime %></td>
+        <td><%= $entry->ssh_session->endtime %></td>
+        <td><%= $entry->get_column('length_ttylog') %></td>
+        <td><a href="/stats/ttylog/<%= $entry->session %>">View</a></td>
+    </tr>
+% }
+</tbody>
+</table>
+
+</div>

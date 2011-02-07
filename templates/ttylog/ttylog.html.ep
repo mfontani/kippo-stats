@@ -1,0 +1,112 @@
+% layout 'default';
+% title 'Kippo TTY Log';
+
+<h2 style="margin:auto;text-align:center;">TTY Log for a <a href="https://code.google.com/p/kippo/">Kippo</a> SSH honeypot</h2>
+
+<div style="margin:auto; width: 600px;">
+
+% if ($ttylog) {
+
+    <script>
+        var lines = [];
+        var iLine = 0;
+window.onload=function() {
+        % my $nlines = 0; for my $line ( @$lines_ttylog ) {
+            lines[<%= $nlines %>] = [
+            % for my $entity ( @$line ) {
+                "<%= $entity %>",
+            % }
+            ];
+            % $nlines++;
+        % }
+
+    printLine();
+}
+
+    function printLine()
+    {
+        if (iLine >= lines.length)
+        {
+            return;
+        }
+        var row = lines[iLine];
+        var element = row;
+        var nextrow = new Array("0","0","","0");
+        if(iLine < lines.length - 1)
+        {
+            nextrow = lines[iLine + 1];
+        }
+        var wait = nextrow[1];
+        if(element.length == 4)
+        {
+            var text = element[2];
+            if ( element[3] == "1" ) { text = ""; }
+            var text = text.replace(/\[NL\]/g, "\n");
+            if(text.indexOf("[DEL]") >= 0 || text.indexOf("[BS]") >= 0)
+            {
+                var shell = document.getElementById("shell");
+                var shellvalue = shell.value;
+                shell.value = shellvalue.substr(0, shellvalue.length - 1);
+                shell.scrollTop = shell.scrollHeight;
+            }
+            else if(text.indexOf("[RE]") >= 0)
+            {
+                if(text.length > 4)
+                {
+                    text = text.replace(/\[RE\]/g, "");
+                    var shell = document.getElementById("shell");
+                    var shellvalue = shell.value;
+                    var lastNewline = shellvalue.lastIndexOf("\n");
+                    shell.value = shellvalue.substr(0, lastNewline + 1) + text;
+                    shell.scrollTop = shell.scrollHeight;
+                }
+            }
+            else if(text.indexOf("[??]") >= 0)
+            {
+                wait = 0;
+            }
+            else if(text.indexOf("[ESC]c") >= 0)
+            {
+                var shell = document.getElementById("shell");
+                shell.value = "";
+                shell.scrollTop = shell.scrollHeight;
+            }
+            else if(text.indexOf("[ESC]") < 0)
+            {
+                var shell = document.getElementById("shell");
+                shell.value += text;
+                shell.scrollTop = shell.scrollHeight;
+            }
+            else
+            {
+                wait = 0;
+            }
+            if(wait < 0.00001 && nextrow[2] == element[2] && iLine < lines.length - 2)
+            {
+                var theRowAfter = lines[iLine + 2];
+                wait = theRowAfter[1];
+                iLine += 1;
+            }
+        }
+        iLine += 1;
+        var t=setTimeout("printLine()", wait * 130);
+    }
+    </script>
+
+    <p>
+        This session lasted from
+        <%= $ttylog->ssh_session->starttime %> to
+        <%= $ttylog->ssh_session->endtime %>.<br />
+        A total of <%= $ttylog->get_column('length_ttylog') %> bytes were wasted.
+    </p>
+
+    <textarea id="shell" cols="72" rows="25" readonly="readonly"
+        style="font-size: 11px; font-family: monospace; background: #000000; color: #0EA138; border: 0px;"></textarea>
+
+% } else {
+
+    <div style="text-align:center">No such session :(</div>
+
+% }
+
+</div>
