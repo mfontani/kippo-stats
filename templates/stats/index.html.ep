@@ -5,8 +5,8 @@
 
 <article style="margin:auto; text-align:center;">
     <figure>
-        <a href="/stats/sessions/"><img src='#loading' id="img_sessions_today" /></a>
-        <a href="/stats/successful_auth/"><img src='#loading' id="img_successful_auth_today" /></a>
+        <a href="/stats/sessions/"><img src='/1x1.png' id="img_sessions_today" /></a>
+        <a href="/stats/successful_auth/"><img src='/1x1.png' id="img_successful_auth_today" /></a>
         <figcaption>
             <span id="txt_sessions_today">0</span> total sessions,
             <span id="txt_successful_auth_today">0</span> total successful auth
@@ -14,8 +14,8 @@
         </figcaption>
     </figure>
     <figure>
-        <a href="/stats/usernames_auth/"><img src='#loading' id="img_usernames_auth_today" /></a>
-        <a href="/stats/passwords_auth/"><img src='#loading' id="img_passwords_root_today" /></a>
+        <a href="/stats/usernames_auth/"><img src='/1x1.png' id="img_usernames_auth_today" /></a>
+        <a href="/stats/passwords_auth/"><img src='/1x1.png' id="img_passwords_root_today" /></a>
         <figcaption>
             Top attempted usernames and top attempted passwords for <tt>root</tt> since <span class="txt_today">Eternity</span>
         </figcaption>

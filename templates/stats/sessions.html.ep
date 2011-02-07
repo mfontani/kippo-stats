@@ -5,21 +5,21 @@
 
 <article style="margin:auto; text-align:center;">
     <figure>
-        <img src='#loading' id="img_sessions_today" />
+        <img src='/1x1.png' id="img_sessions_today" />
         <figcaption>
             <span id="txt_sessions_today">0</span> total sessions
             since <span id="txt_today">Eternity</span>
         </figcaption>
     </figure>
     <figure>
-        <img src='#loading' id="img_sessions_last7days" />
+        <img src='/1x1.png' id="img_sessions_last7days" />
         <figcaption>
             <span id="txt_sessions_last7days">0</span> total sessions
             since <span id="txt_last7days">Eternity</span>
         </figcaption>
     </figure>
     <figure>
-        <img src='#loading' id="img_sessions_last30days" />
+        <img src='/1x1.png' id="img_sessions_last30days" />
         <figcaption>
             <span id="txt_sessions_last30days">0</span> total sessions
             since <span id="txt_last30days">Eternity</span>
