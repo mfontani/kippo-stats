@@ -35,6 +35,8 @@ sub startup {
     $r->route('/stats/usernames_auth/')->to('stats#usernames_auth');
     $r->route('/stats/passwords_auth/img/:username/:since')->to('stats#passwords_auth_img');
     $r->route('/stats/passwords_auth/')->to('stats#passwords_auth');
+    $r->route('/stats/ttylog/')->to('ttylog#index');
+    $r->route('/stats/ttylog/:session')->to('ttylog#ttylog');
 }
 
 1;
