@@ -52,6 +52,7 @@ __PACKAGE__->set_primary_key("id");
 # Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-01-17 19:50:47
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:HUkPS2d3qy5zdqIQMcW/UA
 
+__PACKAGE__->has_one( ssh_session => 'KippoStats::DB::Schema::Result::Session', { 'foreign.id' => 'self.session' });
 
 # You can replace this text with custom content, and it will be preserved on regeneration
 1;
