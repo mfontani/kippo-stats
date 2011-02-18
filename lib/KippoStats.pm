@@ -3,6 +3,8 @@ package KippoStats;
 use strict;
 use warnings;
 
+# ABSTRACT: Statistics for your Kippo honeypot
+
 use lib './lib';
 use base 'Mojolicious';
 use KippoStats::DB::Schema;
